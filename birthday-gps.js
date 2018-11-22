@@ -1,35 +1,45 @@
 var birthday1;
 var birthday2;
-var latitude, longitude;
+var latitude;
+var longitude;
 var answer = document.getElementById("answer");
 var googleMaps;
-function findLocation(){
-//	if(validate()==true){
+
+function getInput(){
 	birthday1 = new Date(document.getElementById("birthday1").value);
 	birthday2 = new Date(document.getElementById("birthday2").value);
-	latitude = document.getElementById("latitude").value.match(/^\d{1,2}[.]/); 
+	latitude = document.getElementById("latitude").value.match(/^\d{1,2}[.]/);
 	longitude =  document.getElementById("longitude").value.match(/^\d{1,2}[.]/);
-
+}
+function findLocation(){
+	getInput();
+	validate();
+	if(validate()==true){
+	console.log("validation");
+	console.log(birthday1);
 	var newLatitude = latitude + birthday1.toLocaleDateString('en-GB').split(/\W/).join("");
 	var newLongitude = longitude + birthday2.toLocaleDateString('en-GB').split(/\W/).join("");
 	return  "https://www.google.com/maps/@" + newLatitude + "," + newLongitude + ",17z";
-	//answer.innerHTML = googleMaps;
-	
-	
+	}
 }
 
 function validate(){
-	isFilled(latitude);
-}
-function isFilled(input){
-	console.log(latitude);
-	if(input==""){
-		console.log("blank");
-		return false;
-	}else{
+	if (!isFilled(latitude) || !isFilled(longitude) || !isFilled(birthday1) || !isFilled(birthday2)){
+			return false;
+	}else {
 		return true;
 	}
 }
+function isFilled(input){
+	if(input==null){
+		console.log("blank");
+		return false;
+	}else{
+		console.log('true');
+		return true;
+	}
+}
+//TODO don't create new element, update link instead
 function printAnswer(){
 	var a = document.createElement('a');
 	var linkText = document.createTextNode("Go here");
@@ -41,10 +51,7 @@ function printAnswer(){
 }
 //document.getElementById("calculate").addEventListener('click', checkInput);
 
-
 document.getElementById("calculate").addEventListener('click', printAnswer);
-isFilled(latitude);
-//console.log(birthday1.getFullYear());
 
 
 //TODO check if input is correct, throw error message if not
