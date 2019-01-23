@@ -2,7 +2,6 @@ var birthday1;
 var birthday2;
 var latitude;
 var longitude;
-var answer = document.getElementById("answer");
 var googleMaps;
 
 function getInput(){
@@ -12,6 +11,7 @@ function getInput(){
 	longitude =  document.getElementById("longitude").value;//.match(/^\d{1,2}[.]/);
 }
 function findLocation(){
+
 	getInput();
 	validate();
 	if(validate()==true){
@@ -50,20 +50,23 @@ function isFilled(input){
 	}
 }
 
-//TODO don't create new element, update link instead
+function init(){
+	document.getElementById('main').removeChild(document.getElementById('answer'));
+}
+
 function printAnswer(){
+	var div = document.createElement("div");
+	div.id = "answer";
+	document.getElementById("main").appendChild(div);
 	var a = document.createElement('a');
 	var linkText = document.createTextNode("Go here");
 	a.appendChild(linkText);
 	a.title = "Go here";
 	a.href = findLocation();
-	answer.appendChild(a);
+	a.target = "blank";
+	div.appendChild(a);
 
 }
-//document.getElementById("calculate").addEventListener('click', checkInput);
+document.getElementById("calculate").addEventListener('click', init);
 
 document.getElementById("calculate").addEventListener('click', printAnswer);
-
-
-//TODO check if input is correct, throw error message if not
-//TODO make button to update when input is changed (probably happends bc input is loaded with page)
