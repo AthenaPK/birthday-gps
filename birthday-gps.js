@@ -7,51 +7,58 @@ var googleMaps;
 function getInput(){
 	birthday1 = new Date(document.getElementById("birthday1").value);
 	birthday2 = new Date(document.getElementById("birthday2").value);
-	latitude = document.getElementById("latitude").value;//.match(/^\d{1,2}[.]/);
-	longitude =  document.getElementById("longitude").value;//.match(/^\d{1,2}[.]/);
+	latitude = document.getElementById("latitude").value;
+	longitude =  document.getElementById("longitude").value;
 }
 function findLocation(){
-
-	getInput();
-	validate();
-	if(validate()==true){
 	console.log("validated!");
 	console.log(birthday1);
 	var newLatitude = latitude + birthday1.toLocaleDateString('en-GB').split(/\W/).join("");
 	var newLongitude = longitude + birthday2.toLocaleDateString('en-GB').split(/\W/).join("");
 	return  "https://www.google.com/maps/@" + newLatitude + "," + newLongitude + ",17z";
-	}
 }
 
 function validate(){
 	if (!isFilled(latitude) || !isFilled(longitude)){
-		console.log("Please enter coordinates")
 		return false;
 	}else if(isNaN(latitude) || isNaN(longitude)){
-		console.log("Please enter valid coordinates");
 		return false;
 	}else if (latitude > 90 || latitude < -90 || longitude < -180 || longitude > 180) {
-		console.log("Please enter valid coordinates");
 		return false;
 	}else if (!Date.parse(birthday1) || !Date.parse(birthday2)) {
-		console.log("Please enter a valid date");
 		return false;
 	}
 	else {
 		return true;
 	}
 }
+
+
+
+function displayErrorMessage(message){
+	var div = document.createElement("div");
+	div.id = "error_msg";
+	document.getElementById('main').appendChild(div);
+	div.appendChild(document.createTextNode(message));
+}
 function isFilled(input){
 	if(input==null || input == ""){
 		return false;
-		// TODO: return error message
 	}else{
 		return true;
 	}
 }
 
 function init(){
-	document.getElementById('main').removeChild(document.getElementById('answer'));
+	var answer = document.getElementById('answer');
+	var error_msg = document.getElementById('error_msg');
+	if (typeof(answer) != undefined && answer != null){
+		document.getElementById('main').removeChild(answer);
+		console.log('removed');
+	}if (typeof(error_msg) != undefined && error_msg != null){
+		document.getElementById('main').removeChild(error_msg);
+	}
+
 }
 
 function printAnswer(){
@@ -67,6 +74,16 @@ function printAnswer(){
 	div.appendChild(a);
 
 }
-document.getElementById("calculate").addEventListener('click', init);
 
-document.getElementById("calculate").addEventListener('click', printAnswer);
+function calculate(){
+	init();
+	getInput();
+	validate();
+	if(validate()==true){
+		findLocation();
+		printAnswer();
+	}else{
+		displayErrorMessage("Please enter valid information.")
+	}
+}
+document.getElementById("calculate").addEventListener('click', calculate);
