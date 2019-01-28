@@ -2,20 +2,23 @@ var birthday1;
 var birthday2;
 var latitude;
 var longitude;
-var googleMaps;
+
+function init(){
+	var answer = document.getElementById('answer');
+	var error_msg = document.getElementById('error_msg');
+	if (typeof(answer) != undefined && answer != null){
+		document.getElementById('main').removeChild(answer);
+		console.log('removed');
+	}if (typeof(error_msg) != undefined && error_msg != null){
+		document.getElementById('main').removeChild(error_msg);
+	}
+}
 
 function getInput(){
 	birthday1 = new Date(document.getElementById("birthday1").value);
 	birthday2 = new Date(document.getElementById("birthday2").value);
 	latitude = document.getElementById("latitude").value;
 	longitude =  document.getElementById("longitude").value;
-}
-function findLocation(){
-	console.log("validated!");
-	console.log(birthday1);
-	var newLatitude = latitude + birthday1.toLocaleDateString('en-GB').split(/\W/).join("");
-	var newLongitude = longitude + birthday2.toLocaleDateString('en-GB').split(/\W/).join("");
-	return  "https://www.google.com/maps/@" + newLatitude + "," + newLongitude + ",17z";
 }
 
 function validate(){
@@ -33,14 +36,6 @@ function validate(){
 	}
 }
 
-
-
-function displayErrorMessage(message){
-	var div = document.createElement("div");
-	div.id = "error_msg";
-	document.getElementById('main').appendChild(div);
-	div.appendChild(document.createTextNode(message));
-}
 function isFilled(input){
 	if(input==null || input == ""){
 		return false;
@@ -49,16 +44,19 @@ function isFilled(input){
 	}
 }
 
-function init(){
-	var answer = document.getElementById('answer');
-	var error_msg = document.getElementById('error_msg');
-	if (typeof(answer) != undefined && answer != null){
-		document.getElementById('main').removeChild(answer);
-		console.log('removed');
-	}if (typeof(error_msg) != undefined && error_msg != null){
-		document.getElementById('main').removeChild(error_msg);
-	}
+function displayErrorMessage(message){
+	var div = document.createElement("div");
+	div.id = "error_msg";
+	document.getElementById('main').appendChild(div);
+	div.appendChild(document.createTextNode(message));
+}
 
+function findLocation(){
+	console.log("validated!");
+	console.log(birthday1);
+	var newLatitude = latitude + birthday1.toLocaleDateString('en-GB').split(/\W/).join("");
+	var newLongitude = longitude + birthday2.toLocaleDateString('en-GB').split(/\W/).join("");
+	return  "https://www.google.com/maps/@" + newLatitude + "," + newLongitude + ",17z";
 }
 
 function printAnswer(){
@@ -72,7 +70,6 @@ function printAnswer(){
 	a.href = findLocation();
 	a.target = "blank";
 	div.appendChild(a);
-
 }
 
 function calculate(){
