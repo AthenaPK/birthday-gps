@@ -1,8 +1,8 @@
 .container{
   border-style: solid;
-  width: 25vw;
+  width: 35vw;
   min-width: 500px;
-  height: 500px;
+  height: 700px;
   position: absolute;
   top:0;
   bottom: 0;
@@ -10,23 +10,40 @@
   right: 0;
   margin: auto;
   text-align: center;
+  font-family: Roboto, sans-serif;
 }
-
+#comic{
+  position: relative;
+  width: 100%;
+  /* left: 50%; */
+  margin: 0 auto;
+}
 .textbox{
-  padding: 5%;
+  padding-top: 2rem;
   margin: 0 auto;
   width: 50%;
+  max-height: 100px;
 }
 
-.textbox:first-child{
-  padding-top: 10%;
-}
+/* .textbox:last-child{
+  margin-bottom: 2rem;
+} */
 
 .container button{
   margin: 0 auto;
-
+  margin-top: 3rem;
 }
 
 .label{
-  font-family: Roboto, sans-serif;
+  /* font-family: Roboto, sans-serif; */
+  padding-bottom: 1rem;
+}
+
+#error_msg{
+  color: red;
+  margin-top: 1rem;
+}
+
+#answer{
+  margin-top: 1rem;
 }
