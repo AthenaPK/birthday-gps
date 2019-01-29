@@ -54,8 +54,8 @@ function displayErrorMessage(message){
 function findLocation(){
 	console.log("validated!");
 	console.log(birthday1);
-	var newLatitude = latitude + birthday1.toLocaleDateString('en-GB').split(/\W/).join("");
-	var newLongitude = longitude + birthday2.toLocaleDateString('en-GB').split(/\W/).join("");
+	var newLatitude = latitude.match(/^\d{1,2}[.]/) + birthday1.toLocaleDateString('en-GB').split(/\W/).join("");
+	var newLongitude = longitude.match(/^\d{1,2}[.]/) + birthday2.toLocaleDateString('en-GB').split(/\W/).join("");
 	return  "https://www.google.com/maps/@" + newLatitude + "," + newLongitude + ",17z";
 }
 
